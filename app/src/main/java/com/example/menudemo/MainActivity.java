@@ -1,6 +1,7 @@
 package com.example.menudemo;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +10,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+    ListView lv;
+    Context context;
+    ArrayList progList;
+
+    public static Integer [] progImages = {
+            R.drawable.one,R.drawable.two,R.drawable.three,R.drawable.four,
+            R.drawable.five,R.drawable.six,R.drawable.seven,R.drawable.eight,R.drawable.nine
+    };
+
+    public static String[] prognames = {
+            "C","C++","Java","Kotlin","VB","Python","C#","Ruby","Pearl"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        MyListAdapter adapter=new MyListAdapter(this,progImages,prognames);
+        lv=(ListView)findViewById(R.id.lv1);
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this,"You clicked: "+prognames[position],Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
